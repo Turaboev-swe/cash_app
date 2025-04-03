@@ -19,7 +19,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <?php if (isset($_SESSION['user_id'])): ?>
+                <?php use App\Money;
+
+                if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/cashs">Kirim saqlash  </a>
                     </li>
@@ -30,6 +32,26 @@
                         <a class="nav-link" href="/expense">chiqim Saqlash</a>
                     </li>
                 <?php endif; ?>
+            <?php $total = new Money();
+            $totalExpense = $total->getTotalExpense();
+            $totalCash = $total->getTotalCash();
+            ?>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Hisobdagi Kirim: <?= number_format($totalCash, 2) ?> UZS
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Hisobdagi Chiqim: <?= number_format($totalExpense, 2) ?> UZS
+                        </a>
+                    </li>
+                <?php endif; ?>
+
             </ul>
             <?php if (!isset($_SESSION['username'])): ?>
                 <a href="/login" class="btn btn-outline-primary mx-2">Login</a>
