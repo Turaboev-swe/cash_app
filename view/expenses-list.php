@@ -10,7 +10,7 @@ $money     = new Money();
 $expenseList = $money->getExpense();
 
 $reasons   = new Reason();
-$reasonList = $reasons->getAll();
+$reasonList = $reasons->getAllForExpense();
 
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"

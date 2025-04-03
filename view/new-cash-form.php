@@ -6,7 +6,7 @@ declare(strict_types=1);
 use App\Reason;
 
 $reasons     = new Reason();
-$reasonList = $reasons->getAll();
+$reasonList = $reasons->getAllForCash();
 ?>
 <form action="/cashs" method="post" class="row row-cols-lg-auto py-4">
     <div class="col">Kirimlar</div>
@@ -23,9 +23,10 @@ $reasonList = $reasons->getAll();
         <div class="form-floating">
             <select class="form-select" id="floatingSelect" name="reason_id">
                 <option selected disabled>Reason</option>
-                <?php  foreach ($reasonList as $reason): ?>
+                <?php
+                foreach ($reasonList as $reason): ?>
                     <option value="<?= htmlspecialchars((string) $reason['id']) ?>">
-                        <?= htmlspecialchars((string) $reason['reasons']) ?>
+                        <?= htmlspecialchars((string) $reason['reason_cash']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -34,6 +35,7 @@ $reasonList = $reasons->getAll();
         <input type="hidden" name="status" value="Active">
 
     </div>
+
     <button type="submit" class="btn btn-primary">+</button>
 
 </form>

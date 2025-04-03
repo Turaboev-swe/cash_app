@@ -11,7 +11,7 @@ $money     = new Money();
 $cashList = $money->getCash();
 
 $reasons   = new Reason();
-$reasonList = $reasons->getAll();
+$reasonList = $reasons->getAllForCash();
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -30,11 +30,11 @@ $reasonList = $reasons->getAll();
     <?php foreach ($cashList as $money): ?>
         <?php
         $moneyId = $money['id'];
-        $reason = $reasons->getById($money['reason_id']);
+        $reason = $reasons->getByIdCash($money['reason_id']);
         ?>
         <tr>
             <td><?= htmlspecialchars((string) $money['body']) ?></td>
-            <td><?= htmlspecialchars((string) $reason['reasons']) ?></td>
+            <td><?= htmlspecialchars((string) $reason['reason_cash']) ?></td>
             <td><?= htmlspecialchars((string) $money['description']) ?></td>
             <td>
                 <form action="/delete-money" method="get" class="ms-2">

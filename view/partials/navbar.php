@@ -29,7 +29,7 @@
 
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/expense">chiqim Saqlash</a>
+                        <a class="nav-link" href="/expense">Chiqim Saqlash</a>
                     </li>
                 <?php endif; ?>
             <?php $total = new Money();

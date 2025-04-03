@@ -17,13 +17,16 @@ class Money
     public function add(int $money, string $description,string $status = 'Active'): void
     {
 
+//        var_dump($_POST);
+//        die();
+
         $stmt = $this->mysqli->prepare("INSERT INTO cash (body, description, user_id, reason_id,status) VALUES (?, ?, ?, ?, ?)");
 
         if (!$stmt) {
             die("Error preparing statement: " . $this->mysqli->error);
         }
 
-        $stmt->bind_param("isiis", $money, $description, $_SESSION['user_id'], $_POST['reason_id'],$_POST['status']);
+        $stmt->bind_param("isiis", $money, $description, $_SESSION['user_id'], $_POST['reason_id'],$status);
 
         if ($stmt->execute()) {
             echo "Money added successfully.";

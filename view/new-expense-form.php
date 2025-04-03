@@ -6,7 +6,7 @@ declare(strict_types=1);
 use App\Reason;
 
 $reasons     = new Reason();
-$reasonList = $reasons->getAll();
+$reasonList = $reasons->getAllForExpense();
 ?>
 
 <form action="/expense" method="post" class="row row-cols-lg-auto py-4">
