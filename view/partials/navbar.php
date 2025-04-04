@@ -73,6 +73,23 @@
             <?php endif; ?>
         </div>
     </div>
+    <div class="container mt-4">
+    <form method="get" action="">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="start_date" class="form-label">Boshlanish sanasi:</label>
+                <input type="date" id="start_date" name="start_date" class="form-control" value="<?= $_GET['start_date'] ?? '' ?>">
+            </div>
+            <div class="col">
+                <label for="end_date" class="form-label">Tugash sanasi:</label>
+                <input type="date" id="end_date" name="end_date" class="form-control" value="<?= $_GET['end_date'] ?? '' ?>">
+            </div>
+            <div class="col align-self-end">
+                <button type="submit" class="btn btn-primary">Filtrlash</button>
+            </div>
+        </div>
+    </form>
+    </div>
 </nav>
 </body>
 </html>

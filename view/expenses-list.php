@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 use App\Money;
-
 use App\Reason;
 
 $money     = new Money();
