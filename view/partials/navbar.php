@@ -26,7 +26,6 @@
                         <a class="nav-link" href="/cashs">Kirim saqlash  </a>
                     </li>
                 <?php endif; ?>
-
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/expense">Chiqim Saqlash</a>
@@ -43,12 +42,16 @@
                         </a>
                     </li>
                 <?php endif; ?>
-
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link">
                             Hisobdagi Chiqim: <?= number_format($totalExpense, 2) ?> UZS
                         </a>
+                    </li>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reasons">Sabab Saqlash</a>
                     </li>
                 <?php endif; ?>
 

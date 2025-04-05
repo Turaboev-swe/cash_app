@@ -8,11 +8,13 @@ use App\Reason;
 $money = new Money();
 $reasons = new Reason();
 
+$cashFilterList = 0;
+
 if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
-    $cashList = $money->getCashByDateRange($_GET['start_date'], $_GET['end_date']);
-} else {
-    $cashList = $money->getCash();
+    $cashFilterList = $money->getCashByDateRange($_GET['start_date'], $_GET['end_date']);
 }
+
+    $cashList = $money->getCash();
 
 $reasonList = $reasons->getAllForCash();
 
@@ -24,7 +26,7 @@ $reasonList = $reasons->getAllForCash();
 
 <div class="container mt-4">
 
-    <!-- Sana bo‘yicha filter form -->
+    <!-- Sana filter form -->
     <form method="get" class="row g-3 mb-4">
         <div class="col-md-4">
             <label for="start_date" class="form-label">Boshlanish sanasi</label>
@@ -39,9 +41,13 @@ $reasonList = $reasons->getAllForCash();
         <div class="col-md-4 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Filter</button>
         </div>
+        <li class="nav-item">
+            <a class="nav-link">
+                Hisobdagi Chiqim: <?= number_format($cashFilterList, 2) ?> UZS
+            </a>
+        </li>
     </form>
 
-    <!-- Jadval -->
     <table class="table table-white table-hover">
         <thead>
         <tr>

@@ -15,6 +15,37 @@ class Reason
     {
         $this->mysqli = DB::connect();
     }
+    public function addReasonExpense(string $reason) : void
+    {
+        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reasons ) VALUES ( ? )");
+
+        if (!$stmt) {
+            die("Error preparing statement: " . $this->mysqli->error);
+        }
+        $stmt->bind_param("s", $reason);
+
+        if ($stmt->execute()) {
+            echo "Money added successfully.";
+        } else {
+            echo "Error adding money record: " . $stmt->error;
+        }
+    }
+    public function addReasonCash(string $reason_cash) : void
+    {
+
+        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reason_cash ) VALUES ( ? )");
+
+        if (!$stmt) {
+            die("Error preparing statement: " . $this->mysqli->error);
+        }
+        $stmt->bind_param("s", $reason_cash);
+
+        if ($stmt->execute()) {
+            echo "Reason added successfully.";
+        } else {
+            echo "Error adding money record: " . $stmt->error;
+        }
+    }
 
     public function getAllForCash(): array
     {

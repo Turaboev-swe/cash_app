@@ -5,16 +5,48 @@ declare(strict_types=1);
 use App\Money;
 use App\Reason;
 
-$money     = new Money();
+
+$money = new Money();
+$reasons = new Reason();
+
+$expenseFilterList = 0;
+
+if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+    $expenseFilterList = $money->getExpenseByDateRange($_GET['start_date'], $_GET['end_date']);
+}
+
 $expenseList = $money->getExpense();
 
-$reasons   = new Reason();
 $reasonList = $reasons->getAllForExpense();
 
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/c4497f215d.js" crossorigin="anonymous"></script>
+<div class="container mt-4">
+
+
+    <!-- Sana filter form -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="start_date" class="form-label">Boshlanish sanasi</label>
+            <input type="date" class="form-control" id="start_date" name="start_date"
+                   value="<?= htmlspecialchars($_GET['start_date'] ?? '') ?>">
+        </div>
+        <div class="col-md-4">
+            <label for="end_date" class="form-label">Tugash sanasi</label>
+            <input type="date" class="form-control" id="end_date" name="end_date"
+                   value="<?= htmlspecialchars($_GET['end_date'] ?? '') ?>">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+        <li class="nav-item">
+            <a class="nav-link">
+                Hisobdagi Chiqim: <?= number_format($expenseFilterList, 2) ?> UZS
+            </a>
+        </li>
+    </form>
 
 <table class="table table-white table-hover">
     <thead>
@@ -49,5 +81,6 @@ $reasonList = $reasons->getAllForExpense();
     <?php endforeach; ?>
     </tbody>
 </table>
+</div>
 
 

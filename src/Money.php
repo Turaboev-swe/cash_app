@@ -55,12 +55,12 @@ class Money
 
     public function getCash(): array
     {
-        $stmt = $this->mysqli->query('SELECT id,body, description, reason_id, user_id FROM cash WHERE status = "Active"');
+        $stmt = $this->mysqli->query('SELECT id,body, description, reason_id, user_id, created_at FROM cash WHERE status = "Active"');
         return $stmt->fetch_all(MYSQLI_ASSOC);
     }
     public function getExpense(): array
     {
-        $stmt = $this->mysqli->query('SELECT id,expense, expense_description, reason_id, user_id FROM cash WHERE status = "Inactive"');
+        $stmt = $this->mysqli->query('SELECT id,expense, expense_description, reason_id, user_id, created_at FROM cash WHERE status = "Inactive"');
         return $stmt->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -101,9 +101,9 @@ class Money
             echo "Error deleting money record: " . $stmt->error;
         }
     }
-    public function getCashByDateRange(string $startDate, string $endDate): array
+    public function getCashByDateRange(string $startDate, string $endDate): float
     {
-        $stmt = $this->mysqli->prepare('SELECT id, body, description, reason_id, user_id FROM cash WHERE status = "Active" AND created_at BETWEEN ? AND ?');
+        $stmt = $this->mysqli->prepare('SELECT SUM(body) AS total_Cash FROM cash WHERE status = "Active" AND created_at BETWEEN ? AND ?');
 
         if (!$stmt) {
             die("Error preparing statement: " . $this->mysqli->error);
@@ -112,13 +112,14 @@ class Money
         $stmt->bind_param("ss", $startDate, $endDate);
         $stmt->execute();
         $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return (float) ($row['total_Cash'] ?? 0);
     }
 
-    public function getExpenseByDateRange(string $startDate, string $endDate): array
+    public function getExpenseByDateRange(string $startDate, string $endDate): float
     {
-        $stmt = $this->mysqli->prepare('SELECT id, expense, expense_description, reason_id, user_id FROM cash WHERE status = "Inactive" AND created_at BETWEEN ? AND ?');
+        $stmt = $this->mysqli->prepare('SELECT SUM(expense) AS total_Expense FROM cash WHERE status = "Inactive" AND created_at BETWEEN ? AND ?');
 
         if (!$stmt) {
             die("Error preparing statement: " . $this->mysqli->error);
@@ -127,7 +128,8 @@ class Money
         $stmt->bind_param("ss", $startDate, $endDate);
         $stmt->execute();
         $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return (float) ($row['total_Expense'] ?? 0);
     }
 }
