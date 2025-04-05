@@ -20,6 +20,9 @@
             <div class="d-flex gap-4">
                 <?php require './view/new-reason-form.php'; ?>
             </div>
+            <div class="d-flex gap-4">
+                <?php require './view/new-cash-reason.php'; ?>
+            </div>
         </div>
 
     </div>

@@ -20,6 +20,7 @@ $reasonList = $reasons->getAllForCash();
         <label for="description" class="form-label">Input description</label>
         <input type="text" id="description" class="form-control" name="description" aria-label="description input field">
 
+        <label for="description" class="form-label">Select Reason</label>
         <div class="form-floating">
             <select class="form-select" id="floatingSelect" name="reason_id">
                 <option selected disabled>Reason</option>

@@ -15,7 +15,7 @@ Router::get('/reasons', fn() => require 'view/pages/reasons.php');
 
 Router::post('/reasons', fn() => (new ReasonController())->addReasonExpense());
 
-Router::post('/reasons', fn() => (new ReasonController())->addReasonCash());
+Router::post('/reasons-cash', fn() => (new ReasonController())->addReasonCash());
 
 Router::get('/expense', fn() => require 'view/pages/expenses.php');
 

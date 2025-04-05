@@ -15,14 +15,14 @@ class Reason
     {
         $this->mysqli = DB::connect();
     }
-    public function addReasonExpense(string $reason) : void
+    public function addReasonExpense(string $reason,string $status = 'Active') : void
     {
-        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reasons ) VALUES ( ? )");
+        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reasons, status ) VALUES ( ?, ? )");
 
         if (!$stmt) {
             die("Error preparing statement: " . $this->mysqli->error);
         }
-        $stmt->bind_param("s", $reason);
+        $stmt->bind_param("ss", $reason,$status);
 
         if ($stmt->execute()) {
             echo "Money added successfully.";
@@ -30,15 +30,15 @@ class Reason
             echo "Error adding money record: " . $stmt->error;
         }
     }
-    public function addReasonCash(string $reason_cash) : void
+    public function addReasonCash(string $reason_cash,string $status = 'Inactive') : void
     {
 
-        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reason_cash ) VALUES ( ? )");
+        $stmt = $this->mysqli->prepare("INSERT INTO reasons ( reason_cash, status ) VALUES ( ?, ? )");
 
         if (!$stmt) {
             die("Error preparing statement: " . $this->mysqli->error);
         }
-        $stmt->bind_param("s", $reason_cash);
+        $stmt->bind_param("ss", $reason_cash,$status);
 
         if ($stmt->execute()) {
             echo "Reason added successfully.";
@@ -49,7 +49,7 @@ class Reason
 
     public function getAllForCash(): array
     {
-        $result = $this->mysqli->query('SELECT * FROM reasons WHERE reason_cash IS NOT NULL');
+        $result = $this->mysqli->query('SELECT * FROM reasons WHERE status = "Inactive" AND reason_cash  IS NOT NULL');
 
         if (!$result) {
             die("Query error: " . $this->mysqli->error);
@@ -59,7 +59,7 @@ class Reason
     }
     public function getAllForExpense(): array
     {
-        $result = $this->mysqli->query('SELECT * FROM reasons WHERE reasons IS NOT NULL');
+        $result = $this->mysqli->query('SELECT reasons FROM reasons WHERE status = "Active" AND reasons  IS NOT NULL ');
 
         if (!$result) {
             die("Query error: " . $this->mysqli->error);
